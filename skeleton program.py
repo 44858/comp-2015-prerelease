@@ -190,17 +190,18 @@ def InitialiseBoard(Board, SampleGame):
           Board[RankNo][FileNo] = "  "    
                     
 def GetMove(StartSquare, FinishSquare):
-  valid_move = True
-  while valid_move == True:
+  valid_move = False
+  while valid_move == False:
     StartSquare = int(input("Enter coordinates of square containing piece to move (file first): "))
     if len(str(StartSquare)) == 2:
-           FinishSquare = int(input("Enter coordinates of square to move piece to (file first): "))
+        FinishSquare = int(input("Enter coordinates of square to move piece to (file first): "))
+        valid_move = True
     else:
-           print("Please enter the file AND the rank")
+        print("Please enter the file AND the rank")
   return StartSquare, FinishSquare
 
 def ConfirmMove(StartSquare, FinishSquare):
-    print("Move from space {0} to {1}?")
+    print("Move from space {0} to {1}?".format(StartSquare, FinishSquare))
     confirmed = input("Confirm move(y/n): ")
     return confirmed
         
@@ -209,14 +210,26 @@ def MakeMove(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn):
   if WhoseTurn == "W" and FinishRank == 1 and Board[StartRank][StartFile][1] == "R":
     Board[FinishRank][FinishFile] = "WM"
     Board[StartRank][StartFile] = "  "
+    print("White Redum promoted to White Marzaz Pani")
   elif WhoseTurn == "B" and FinishRank == 8 and Board[StartRank][StartFile][1] == "R":
     Board[FinishRank][FinishFile] = "BM"
     Board[StartRank][StartFile] = "  "
+    print("Black Redum promoted to Black Marzaz Pani")
   else:
     Board[FinishRank][FinishFile] = Board[StartRank][StartFile]
     Board[StartRank][StartFile] = "  "
 
+def GetPieceName(Board, StartSquare):
     
+    
+    
+    
+    
+    
+    
+    
+
+
 if __name__ == "__main__":
   Board = CreateBoard() #0th index not used
   StartSquare = 0 
@@ -225,7 +238,7 @@ if __name__ == "__main__":
   while PlayAgain == "Y":
     WhoseTurn = "W"
     GameOver = False
-    SampleGame = input("Do you want to play the sample game (enter Y for Yes)? ")
+    SampleGame = GetTypeOfGame()
     if ord(SampleGame) >= 97 and ord(SampleGame) <= 122:
       SampleGame = chr(ord(SampleGame) - 32)
     InitialiseBoard(Board, SampleGame)
@@ -235,12 +248,12 @@ if __name__ == "__main__":
       MoveIsLegal = False
       while not(MoveIsLegal):
         StartSquare, FinishSquare = GetMove(StartSquare, FinishSquare)
-        StartRank = StartSquare % 10
-        StartFile = StartSquare // 10
-        FinishRank = FinishSquare % 10
-        FinishFile = FinishSquare // 10
-        confirmed = ConfirmMove(StartSquare, FinishSquare)
-          if confirmed == "y":
+        MoveConfirmed = ConfirmMove(StartSquare, FinishSquare)
+        if MoveConfirmed == "y":
+            StartRank = StartSquare % 10
+            StartFile = StartSquare // 10
+            FinishRank = FinishSquare % 10
+            FinishFile = FinishSquare // 10
             MoveIsLegal = CheckMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn)
             if not(MoveIsLegal):
               print("That is not a legal move - please try again")
@@ -255,4 +268,5 @@ if __name__ == "__main__":
     PlayAgain = input("Do you want to play again (enter Y for Yes)? ")
     if ord(PlayAgain) >= 97 and ord(PlayAgain) <= 122:
       PlayAgain = chr(ord(PlayAgain) - 32)
+
 
