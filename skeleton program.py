@@ -38,14 +38,13 @@ def CheckIfGameWillBeWon(Board, FinishRank, FinishFile):
 def DisplayBoard(Board):
   print()
   for RankNo in range(1, BOARDDIMENSION + 1):
-    print("     _______________________")
+    print("    -------------------------")
     print(RankNo, end="   ")
     for FileNo in range(1, BOARDDIMENSION + 1):
       print("|" + Board[RankNo][FileNo], end="")
     print("|")
-  print("     _______________________")
-  print()
-  print("      1  2  3  4  5  6  7  8")
+  print("    -------------------------")
+  print("     F1 F2 F3 F4 F5 F6 F7 F8")
   print()
   print()    
 
@@ -219,8 +218,12 @@ def MakeMove(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn):
     Board[FinishRank][FinishFile] = Board[StartRank][StartFile]
     Board[StartRank][StartFile] = "  "
 
+
 def GetPieceName(Board, StartSquare):
     
+
+    
+    return colour, name
     
     
     
@@ -268,5 +271,6 @@ if __name__ == "__main__":
     PlayAgain = input("Do you want to play again (enter Y for Yes)? ")
     if ord(PlayAgain) >= 97 and ord(PlayAgain) <= 122:
       PlayAgain = chr(ord(PlayAgain) - 32)
+
 
 
