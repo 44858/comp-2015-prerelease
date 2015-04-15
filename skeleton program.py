@@ -219,20 +219,10 @@ def MakeMove(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn):
     Board[StartRank][StartFile] = "  "
 
 
-def GetPieceName(Board, StartSquare):
+
     
 
     
-    return colour, name
-    
-    
-    
-    
-    
-    
-    
-
-
 if __name__ == "__main__":
   Board = CreateBoard() #0th index not used
   StartSquare = 0 
@@ -271,6 +261,7 @@ if __name__ == "__main__":
     PlayAgain = input("Do you want to play again (enter Y for Yes)? ")
     if ord(PlayAgain) >= 97 and ord(PlayAgain) <= 122:
       PlayAgain = chr(ord(PlayAgain) - 32)
+
 
 
 
