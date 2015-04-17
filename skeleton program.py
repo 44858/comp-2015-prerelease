@@ -194,11 +194,17 @@ def GetMove(StartSquare, FinishSquare):
     try:
       StartSquare = int(input("Enter coordinates of square containing piece to move (file first): "))
       if len(str(StartSquare)) == 2:
-          FinishSquare = int(input("Enter coordinates of square to move piece to (file first): "))
-          if len(str(FinishSquare)) == 2:
-              valid_move = True
-          else:
-              print("Please enter the file AND the rank")
+          valid_move = True
+      else:
+          print("Please enter the file AND the rank")
+    except ValueError:
+      print("Please enter the file and the rank")
+  valid_move = False
+  while valid_move == False:
+    try:
+      FinishSquare = int(input("Enter coordinates of square to move piece to (file first): "))
+      if len(str(FinishSquare)) == 2:
+          valid_move = True
       else:
           print("Please enter the file AND the rank")
     except ValueError:
@@ -225,7 +231,23 @@ def MakeMove(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn):
     Board[StartRank][StartFile] = "  "
 
 
+def DisplayMenu():
+  print("Main Menu")
+  print("1. Start new game")
+  print("2. Load existing game")
+  print("3. Play sample game")
+  print("4. View high scores")
+  print("5. Settings")
+  print("6. Quit program")
+  MenuSelection = int(input("Please select an option: ")
+  return MenuSelection
 
+def GetMenuSelection():
+
+def MakeSelection():
+
+def PlayGame():
+                      
     
 
     
