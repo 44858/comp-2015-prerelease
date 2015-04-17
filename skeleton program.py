@@ -191,15 +191,18 @@ def InitialiseBoard(Board, SampleGame):
 def GetMove(StartSquare, FinishSquare):
   valid_move = False
   while valid_move == False:
-    StartSquare = int(input("Enter coordinates of square containing piece to move (file first): "))
-    if len(str(StartSquare)) == 2:
-        FinishSquare = int(input("Enter coordinates of square to move piece to (file first): "))
-        if len(str(FinishSquare)) == 2:
-            valid_move = True
-        else:
-            print("Please enter the file AND the rank")
-    else:
-        print("Please enter the file AND the rank")
+    try:
+      StartSquare = int(input("Enter coordinates of square containing piece to move (file first): "))
+      if len(str(StartSquare)) == 2:
+          FinishSquare = int(input("Enter coordinates of square to move piece to (file first): "))
+          if len(str(FinishSquare)) == 2:
+              valid_move = True
+          else:
+              print("Please enter the file AND the rank")
+      else:
+          print("Please enter the file AND the rank")
+    except ValueError:
+      print("Please enter the file and the rank")
   return StartSquare, FinishSquare
 
 def ConfirmMove(StartSquare, FinishSquare):
