@@ -194,7 +194,10 @@ def GetMove(StartSquare, FinishSquare):
     StartSquare = int(input("Enter coordinates of square containing piece to move (file first): "))
     if len(str(StartSquare)) == 2:
         FinishSquare = int(input("Enter coordinates of square to move piece to (file first): "))
-        valid_move = True
+        if len(str(FinishSquare)) == 2:
+            valid_move = True
+        else:
+            print("Please enter the file AND the rank")
     else:
         print("Please enter the file AND the rank")
   return StartSquare, FinishSquare
@@ -261,6 +264,7 @@ if __name__ == "__main__":
     PlayAgain = input("Do you want to play again (enter Y for Yes)? ")
     if ord(PlayAgain) >= 97 and ord(PlayAgain) <= 122:
       PlayAgain = chr(ord(PlayAgain) - 32)
+
 
 
 
