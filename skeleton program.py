@@ -38,13 +38,14 @@ def CheckIfGameWillBeWon(Board, FinishRank, FinishFile):
 def DisplayBoard(Board):
   print()
   for RankNo in range(1, BOARDDIMENSION + 1):
-    print("    -------------------------")
-    print(RankNo, end="   ")
+    print("{0:<5}{1}".format("","-"*25))
+    print("R{0:<1}".format(RankNo),end="   ")
     for FileNo in range(1, BOARDDIMENSION + 1):
       print("|" + Board[RankNo][FileNo], end="")
     print("|")
-  print("    -------------------------")
-  print("     F1 F2 F3 F4 F5 F6 F7 F8")
+  print("{0:<5}{1}".format("","-"*25))
+  print()
+  print("{0:<6}{1:<3}{2:<3}{3:<3}{4:<3}{5:<3}{6:<3}{7:<3}{8:<3}".format("","F1","F2","F3","F4","F5","F6","F7","F8"))
   print()
   print()    
 
@@ -227,8 +228,35 @@ def MakeMove(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn):
     Board[StartRank][StartFile] = "  "
     print("Black Redum promoted to Black Marzaz Pani")
   else:
+    if Board[FinishRank][FinishFile] != "  ":
+      print()
+      TakeColour, TakePiece = GetPieceName(Board[StartRank][StartFile])
+      TakenColour, TakenPiece = GetPieceName(Board[FinishRank][FinishFile])
+      print("{0} {1} takes {2} {3}.".format(TakeColour, TakePiece, TakenColour, TakenPiece))
+      print()
     Board[FinishRank][FinishFile] = Board[StartRank][StartFile]
     Board[StartRank][StartFile] = "  "
+
+def GetPieceName(PieceCode):
+  Colour = PieceCode[0]
+  Piece = PieceCode[1]
+  if Colour == "W":
+    Colour = "White"
+  elif Colour == "B":
+    Colour = "Black"
+  if Piece == "S":
+    Piece = "Sarrum"
+  elif Piece == "M":
+    Piece = "Marzaz Pani"
+  elif Piece == "N":
+    Piece = "Nabu"
+  elif Piece == "E":
+    Piece = "Etlu"
+  elif Piece == "G":
+    Piece = "Gisgigir"
+  elif Piece == "R":
+    Piece = "Redum"
+  return Colour, Piece
 
 
 def DisplayMenu():
@@ -239,15 +267,29 @@ def DisplayMenu():
   print("4. View high scores")
   print("5. Settings")
   print("6. Quit program")
-  MenuSelection = int(input("Please select an option: ")
-  return MenuSelection
+  
 
 def GetMenuSelection():
+  MenuSelection = int(input("Please select an option: "))
+  return MenuSelection
 
-def MakeSelection():
+def MakeSelection(MenuSelection):
+  if MenuSelection == 1:
+    
 
-def PlayGame():
-                      
+  elif MenuSelection == 2:
+
+  elif MenuSelection == 3:
+    InitialiseBoard(Board, SampleGame)
+
+  elif MenuSelection == 4:
+
+  elif MenuSelection == 5:
+
+  elif MenuSelection == 6:
+
+
+def PlayGame
     
 
     
