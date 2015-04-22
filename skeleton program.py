@@ -5,13 +5,7 @@
 
 BOARDDIMENSION = 8
 
-def DisplayOptions():
-  print("Options")
-  print("1. Save Game")
-  print("2. Quit to Menu")
-  print("3. Return to Game")
-  print("4. Surrender")
-  
+
 def CreateBoard():
   Board = []
   for Count in range(BOARDDIMENSION + 1):
@@ -299,6 +293,21 @@ def MakeSelection(Choice):
   elif Choice == 6:
     pass
 
+def DisplayOptions():
+  print("Options")
+  print("1. Save Game")
+  print("2. Quit to Menu")
+  print("3. Return to Game")
+  print("4. Surrender")
+
+def GetOptionSelection():
+  DisplayOptions()
+  OptionChoice = int(input("Please enter an option: ")
+  return OptionChoice
+
+def MakeOptionSelection(OptionChoice):
+                     
+    
 
 def PlayGame(SampleGame):
   Board = CreateBoard() #0th index not used
@@ -340,6 +349,7 @@ def PlayGame(SampleGame):
       PlayAgain = chr(ord(PlayAgain) - 32)
     
 
+  
     
 if __name__ == "__main__":
   Choice = GetMenuSelection()
