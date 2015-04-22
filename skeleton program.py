@@ -317,7 +317,6 @@ def PlayGame(SampleGame):
   while PlayAgain == "Y":
     WhoseTurn = "W"
     GameOver = False
-    
     if ord(SampleGame) >= 97 and ord(SampleGame) <= 122:
       SampleGame = chr(ord(SampleGame) - 32)
     InitialiseBoard(Board, SampleGame)
