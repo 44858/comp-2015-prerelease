@@ -5,6 +5,13 @@
 
 BOARDDIMENSION = 8
 
+def DisplayOptions():
+  print("Options")
+  print("1. Save Game")
+  print("2. Quit to Menu")
+  print("3. Return to Game")
+  print("4. Surrender")
+  
 def CreateBoard():
   Board = []
   for Count in range(BOARDDIMENSION + 1):
@@ -191,13 +198,17 @@ def InitialiseBoard(Board, SampleGame):
                     
 def GetMove(StartSquare, FinishSquare):
   valid_move = False
+  valid_option = False
   while valid_move == False:
     try:
       StartSquare = int(input("Enter coordinates of square containing piece to move (file first): "))
-      if len(str(StartSquare)) == 2:
-          valid_move = True
+      if StartSquare != -1: 
+        if len(str(StartSquare)) == 2:
+            valid_move = True
+        else:
+            print("Please enter the file AND the rank")
       else:
-          print("Please enter the file AND the rank")
+        DisplayOptions()
     except ValueError:
       print("Please enter the file and the rank")
   valid_move = False
@@ -270,30 +281,26 @@ def DisplayMenu():
   
 
 def GetMenuSelection():
-  MenuSelection = int(input("Please select an option: "))
-  return MenuSelection
+  DisplayMenu()
+  Choice = int(input("Please select an option: "))
+  return Choice
 
-def MakeSelection(MenuSelection):
-  if MenuSelection == 1:
-    
+def MakeSelection(Choice):
+  if Choice == 1:
+    PlayGame("n")
+  elif Choice == 2:
+    pass
+  elif Choice == 3:
+    PlayGame("y")
+  elif Choice == 4:
+    pass
+  elif Choice == 5:
+    pass
+  elif Choice == 6:
+    pass
 
-  elif MenuSelection == 2:
 
-  elif MenuSelection == 3:
-    InitialiseBoard(Board, SampleGame)
-
-  elif MenuSelection == 4:
-
-  elif MenuSelection == 5:
-
-  elif MenuSelection == 6:
-
-
-def PlayGame
-    
-
-    
-if __name__ == "__main__":
+def PlayGame(SampleGame):
   Board = CreateBoard() #0th index not used
   StartSquare = 0 
   FinishSquare = 0
@@ -301,7 +308,7 @@ if __name__ == "__main__":
   while PlayAgain == "Y":
     WhoseTurn = "W"
     GameOver = False
-    SampleGame = GetTypeOfGame()
+    
     if ord(SampleGame) >= 97 and ord(SampleGame) <= 122:
       SampleGame = chr(ord(SampleGame) - 32)
     InitialiseBoard(Board, SampleGame)
@@ -331,6 +338,14 @@ if __name__ == "__main__":
     PlayAgain = input("Do you want to play again (enter Y for Yes)? ")
     if ord(PlayAgain) >= 97 and ord(PlayAgain) <= 122:
       PlayAgain = chr(ord(PlayAgain) - 32)
+    
+
+    
+if __name__ == "__main__":
+  Choice = GetMenuSelection()
+  MakeSelection(Choice)
+  
+  
 
 
 
