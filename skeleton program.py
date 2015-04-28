@@ -109,6 +109,7 @@ def CheckMarzazPaniMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFi
   CheckMarzazPaniMoveIsLegal = False
   if (abs(FinishFile - StartFile) == 1 and abs(FinishRank - StartRank) == 0) or (abs(FinishFile - StartFile) == 0 and abs(FinishRank - StartRank) ==1):
     CheckMarzazPaniMoveIsLegal = True
+  
   return CheckMarzazPaniMoveIsLegal
 
 def CheckEtluMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
@@ -193,7 +194,8 @@ def InitialiseBoard(Board, SampleGame):
 def GetMove(StartSquare, FinishSquare):
   valid_move = False
   valid_option = False
-  while valid_move == False:
+  surrendered = False
+  while valid_move  == False and valid_option == False:
     try:
       StartSquare = int(input("Enter coordinates of square containing piece to move (file first): "))
       if StartSquare != -1: 
@@ -203,19 +205,28 @@ def GetMove(StartSquare, FinishSquare):
             print("Please enter the file AND the rank")
       else:
         DisplayOptions()
+        selection = GetOptionSelection()
+        surrendered = MakeOptionSelection(selection)
+        valid_option = True
     except ValueError:
       print("Please enter the file and the rank")
   valid_move = False
-  while valid_move == False:
+  while valid_move == False and valid_option == False:
     try:
       FinishSquare = int(input("Enter coordinates of square to move piece to (file first): "))
-      if len(str(FinishSquare)) == 2:
-          valid_move = True
+      if FinishSquare != -1:
+          if len(str(FinishSquare)) == 2:
+              valid_move = True
+          else:
+              print("Please enter the file AND the rank")
       else:
-          print("Please enter the file AND the rank")
+        DisplayOptions()
+        selection = GetOptionSelection()
+        surrendered = MakeOptionSelection(selection)
+        valid_option = True
     except ValueError:
       print("Please enter the file and the rank")
-  return StartSquare, FinishSquare
+  return StartSquare, FinishSquare, surrendered
 
 def ConfirmMove(StartSquare, FinishSquare):
     print("Move from space {0} to {1}?".format(StartSquare, FinishSquare))
@@ -241,6 +252,7 @@ def MakeMove(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn):
       print()
     Board[FinishRank][FinishFile] = Board[StartRank][StartFile]
     Board[StartRank][StartFile] = "  "
+    
 
 def GetPieceName(PieceCode):
   Colour = PieceCode[0]
@@ -299,16 +311,24 @@ def DisplayOptions():
   print("2. Quit to Menu")
   print("3. Return to Game")
   print("4. Surrender")
+  
 
 def GetOptionSelection():
-  DisplayOptions()
-  OptionChoice = int(input("Please enter an option: ")
+  OptionChoice = int(input("Please enter an option: "))
+  
   return OptionChoice
 
 def MakeOptionSelection(OptionChoice):
+  if OptionChoice == 1:
+    pass
+  elif OptionChoice == 2:
+    pass
+  elif OptionChoice == 3:
+    pass
+  elif OptionChoice == 4:
+    surrendered = True
+    return surrendered
                      
-    
-
 def PlayGame(SampleGame):
   Board = CreateBoard() #0th index not used
   StartSquare = 0 
@@ -325,16 +345,23 @@ def PlayGame(SampleGame):
       DisplayWhoseTurnItIs(WhoseTurn)
       MoveIsLegal = False
       while not(MoveIsLegal):
-        StartSquare, FinishSquare = GetMove(StartSquare, FinishSquare)
-        MoveConfirmed = ConfirmMove(StartSquare, FinishSquare)
-        if MoveConfirmed == "y":
-            StartRank = StartSquare % 10
-            StartFile = StartSquare // 10
-            FinishRank = FinishSquare % 10
-            FinishFile = FinishSquare // 10
-            MoveIsLegal = CheckMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn)
-            if not(MoveIsLegal):
-              print("That is not a legal move - please try again")
+        StartSquare, FinishSquare, surrendered = GetMove(StartSquare, FinishSquare)
+        if surrendered == True:
+           print("Surrendering.....")
+           if WhoseTurn == "W":
+             print("White has surrendered, Black wins.")
+           else:
+             print("Black has surrendered, White wins.")
+        elif surrendered == False:
+            MoveConfirmed = ConfirmMove(StartSquare, FinishSquare)
+            if MoveConfirmed == "y":
+                StartRank = StartSquare % 10
+                StartFile = StartSquare // 10
+                FinishRank = FinishSquare % 10
+                FinishFile = FinishSquare // 10
+                MoveIsLegal = CheckMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn)
+                if not(MoveIsLegal):
+                  print("That is not a legal move - please try again")  
       GameOver = CheckIfGameWillBeWon(Board, FinishRank, FinishFile)
       MakeMove(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn)
       if GameOver:
@@ -347,8 +374,6 @@ def PlayGame(SampleGame):
     if ord(PlayAgain) >= 97 and ord(PlayAgain) <= 122:
       PlayAgain = chr(ord(PlayAgain) - 32)
     
-
-  
     
 if __name__ == "__main__":
   Choice = GetMenuSelection()
