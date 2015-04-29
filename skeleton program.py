@@ -53,6 +53,9 @@ def DisplayBoard(Board):
 def CheckRedumMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile, ColourOfPiece):
   CheckRedumMoveIsLegal = False
   if ColourOfPiece == "W":
+    if StartRank == BOARDDIMENSION - 1:
+      if FinishRank == StartRank - 2 or FinishRank == StartRank - 1:
+        CheckRedumMoveIsLegal = True
     if FinishRank == StartRank - 1:
       if FinishFile == StartFile and Board[FinishRank][FinishFile] == "  ":
         CheckRedumMoveIsLegal = True
@@ -101,6 +104,11 @@ def CheckGisgigirMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile
 
 def CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
   CheckNabuMoveIsLegal = False
+
+  RankDifference = abs(FinishRank - StartRank)
+  FileDifference = abs(FinishFile - StartFile)
+  if StartFile < FinishFile and StartRank < FinishRank:
+    for count in range(1, BOARDDIMENSION)
   if abs(FinishFile - StartFile) == 1 and abs(FinishRank - StartRank) == 1:
     CheckNabuMoveIsLegal = True
   return CheckNabuMoveIsLegal
@@ -115,7 +123,7 @@ def CheckMarzazPaniMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFi
 
 def CheckEtluMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
   CheckEtluMoveIsLegal = False
-  if (abs(FinishFile - StartFile) == 2 and abs(FinishRank - StartRank) == 0) or (abs(FinishFile - StartFile) == 0 and abs(FinishRank - StartRank) == 2):
+  if (abs(FinishFile - StartFile) == 2 and abs(FinishRank - StartRank) == 1) or (abs(FinishFile - StartFile) == 1 and abs(FinishRank - StartRank) == 2):
     CheckEtluMoveIsLegal = True
   return CheckEtluMoveIsLegal
 
@@ -305,10 +313,7 @@ def MakeSelection(Choice):
   elif Choice == 6:
     pass
 
-def QuitGame():
-  
-  Choice = GetMenuSelection()
-  MakeSelection(Choice)
+
 
 def DisplayOptions():
   print("Options")
@@ -355,10 +360,14 @@ def PlayGame(SampleGame):
            print("Surrendering.....")
            if WhoseTurn == "W":
              print("White has surrendered, Black wins.")
-             QuitGame()
+             GameOver = True
+             MoveIsLegal = True
+             PlayAgain = "N"
            else:
              print("Black has surrendered, White wins.")
-             QuitGame()
+             GameOver = True
+             MoveIsLegal = True
+             PlayAgain = "N"
         elif surrendered == False:
             MoveConfirmed = ConfirmMove(StartSquare, FinishSquare)
             if MoveConfirmed == "y":
@@ -368,23 +377,26 @@ def PlayGame(SampleGame):
                 FinishFile = FinishSquare // 10
                 MoveIsLegal = CheckMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn)
                 if not(MoveIsLegal):
-                  print("That is not a legal move - please try again")  
-      GameOver = CheckIfGameWillBeWon(Board, FinishRank, FinishFile)
-      MakeMove(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn)
-      if GameOver:
-        DisplayWinner(WhoseTurn)
-      if WhoseTurn == "W":
-        WhoseTurn = "B"
-      else:
-        WhoseTurn = "W"
+                  print("That is not a legal move - please try again")
+        if surrendered == False:
+          GameOver = CheckIfGameWillBeWon(Board, FinishRank, FinishFile)
+          MakeMove(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn)
+          if GameOver:
+            DisplayWinner(WhoseTurn)
+          if WhoseTurn == "W":
+            WhoseTurn = "B"
+          else:
+            WhoseTurn = "W"
     PlayAgain = input("Do you want to play again (enter Y for Yes)? ")
     if ord(PlayAgain) >= 97 and ord(PlayAgain) <= 122:
       PlayAgain = chr(ord(PlayAgain) - 32)
     
     
 if __name__ == "__main__":
-  Choice = GetMenuSelection()
-  MakeSelection(Choice)
+  Quit = False
+  while Quit == False:
+    Choice = GetMenuSelection()
+    MakeSelection(Choice)
   
   
 
