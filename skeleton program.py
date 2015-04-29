@@ -209,7 +209,6 @@ def GetMove(StartSquare, FinishSquare):
         selection = GetOptionSelection()
         surrendered = MakeOptionSelection(selection)
         valid_option = True
-        QuitGame()
     except ValueError:
       print("Please enter the file and the rank")
   valid_move = False
@@ -226,7 +225,6 @@ def GetMove(StartSquare, FinishSquare):
         selection = GetOptionSelection()
         surrendered = MakeOptionSelection(selection)
         valid_option = True
-        QuitGame()
     except ValueError:
       print("Please enter the file and the rank")
   return StartSquare, FinishSquare, surrendered
@@ -357,8 +355,10 @@ def PlayGame(SampleGame):
            print("Surrendering.....")
            if WhoseTurn == "W":
              print("White has surrendered, Black wins.")
+             QuitGame()
            else:
              print("Black has surrendered, White wins.")
+             QuitGame()
         elif surrendered == False:
             MoveConfirmed = ConfirmMove(StartSquare, FinishSquare)
             if MoveConfirmed == "y":
