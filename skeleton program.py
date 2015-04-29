@@ -209,6 +209,7 @@ def GetMove(StartSquare, FinishSquare):
         selection = GetOptionSelection()
         surrendered = MakeOptionSelection(selection)
         valid_option = True
+        QuitGame()
     except ValueError:
       print("Please enter the file and the rank")
   valid_move = False
@@ -225,6 +226,7 @@ def GetMove(StartSquare, FinishSquare):
         selection = GetOptionSelection()
         surrendered = MakeOptionSelection(selection)
         valid_option = True
+        QuitGame()
     except ValueError:
       print("Please enter the file and the rank")
   return StartSquare, FinishSquare, surrendered
@@ -233,8 +235,7 @@ def ConfirmMove(StartSquare, FinishSquare):
     print("Move from space {0} to {1}?".format(StartSquare, FinishSquare))
     confirmed = input("Confirm move(y/n): ")
     return confirmed
-        
-                
+                     
 def MakeMove(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseTurn):
   if WhoseTurn == "W" and FinishRank == 1 and Board[StartRank][StartFile][1] == "R":
     Board[FinishRank][FinishFile] = "WM"
@@ -305,6 +306,11 @@ def MakeSelection(Choice):
     pass
   elif Choice == 6:
     pass
+
+def QuitGame():
+  
+  Choice = GetMenuSelection()
+  MakeSelection(Choice)
 
 def DisplayOptions():
   print("Options")
