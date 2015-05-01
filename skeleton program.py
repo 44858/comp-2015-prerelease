@@ -107,8 +107,17 @@ def CheckNabuMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile):
 
   RankDifference = abs(FinishRank - StartRank)
   FileDifference = abs(FinishFile - StartFile)
+
+  if FileDifference == RankDifference:
+    CheckNabuMoveIsLegal = True
+    
   if StartFile < FinishFile and StartRank < FinishRank:
-    for count in range(1, BOARDDIMENSION)
+    for count in range(1, BOARDDIMENSION):
+      if StartRank + count <= BOARDDIMENSION and StartFile + count <= BOARDDIMENSION:
+        if Board [StartRank + count][StartFile - count] != "":
+          CheckNabuMoveIsLegal = True
+
+      
   if abs(FinishFile - StartFile) == 1 and abs(FinishRank - StartRank) == 1:
     CheckNabuMoveIsLegal = True
   return CheckNabuMoveIsLegal
@@ -164,41 +173,47 @@ def CheckMoveIsLegal(Board, StartRank, StartFile, FinishRank, FinishFile, WhoseT
 
 def InitialiseBoard(Board, SampleGame):
   if SampleGame == "Y":
-    for RankNo in range(1, BOARDDIMENSION + 1):
-      for FileNo in range(1, BOARDDIMENSION + 1):
-        Board[RankNo][FileNo] = "  "
-    Board[1][2] = "BG"
-    Board[1][4] = "BS"
-    Board[1][8] = "WG"
-    Board[2][1] = "WR"
-    Board[3][1] = "WS"
-    Board[3][2] = "BE"
-    Board[3][8] = "BE"
-    Board[6][8] = "BR"
+    InitialiseSampleBoard(Board)
   else:
-    for RankNo in range(1, BOARDDIMENSION + 1):
-      for FileNo in range(1, BOARDDIMENSION + 1):
-        if RankNo == 2:
-          Board[RankNo][FileNo] = "BR"
-        elif RankNo == 7:
-          Board[RankNo][FileNo] = "WR"
-        elif RankNo == 1 or RankNo == 8:
-          if RankNo == 1:
-            Board[RankNo][FileNo] = "B"
-          if RankNo == 8:
-            Board[RankNo][FileNo] = "W"
-          if FileNo == 1 or FileNo == 8:
-            Board[RankNo][FileNo] = Board[RankNo][FileNo] + "G"
-          elif FileNo == 2 or FileNo == 7:
-            Board[RankNo][FileNo] = Board[RankNo][FileNo] + "E"
-          elif FileNo == 3 or FileNo == 6:
-            Board[RankNo][FileNo] = Board[RankNo][FileNo] + "N"
-          elif FileNo == 4:
-            Board[RankNo][FileNo] = Board[RankNo][FileNo] + "M"
-          elif FileNo == 5:
-            Board[RankNo][FileNo] = Board[RankNo][FileNo] + "S"
-        else:
-          Board[RankNo][FileNo] = "  "    
+    InitialiseNewBoard(Board)
+
+def InitialiseSampleBoard(Board):
+  for RankNo in range(1, BOARDDIMENSION + 1):
+    for FileNo in range(1, BOARDDIMENSION + 1):
+      Board[RankNo][FileNo] = "  "
+  Board[1][2] = "BG"
+  Board[1][4] = "BS"
+  Board[1][8] = "WG"
+  Board[2][1] = "WR"
+  Board[3][1] = "WS"
+  Board[3][2] = "BE"
+  Board[3][8] = "BE"
+  Board[6][8] = "BR"
+  
+def InitialiseNewBoard(Board):
+  for RankNo in range(1, BOARDDIMENSION + 1):
+    for FileNo in range(1, BOARDDIMENSION + 1):
+      if RankNo == 2:
+        Board[RankNo][FileNo] = "BR"
+      elif RankNo == 7:
+        Board[RankNo][FileNo] = "WR"
+      elif RankNo == 1 or RankNo == 8:
+        if RankNo == 1:
+          Board[RankNo][FileNo] = "B"
+        if RankNo == 8:
+          Board[RankNo][FileNo] = "W"
+        if FileNo == 1 or FileNo == 8:
+          Board[RankNo][FileNo] = Board[RankNo][FileNo] + "G"
+        elif FileNo == 2 or FileNo == 7:
+          Board[RankNo][FileNo] = Board[RankNo][FileNo] + "E"
+        elif FileNo == 3 or FileNo == 6:
+          Board[RankNo][FileNo] = Board[RankNo][FileNo] + "N"
+        elif FileNo == 4:
+          Board[RankNo][FileNo] = Board[RankNo][FileNo] + "M"
+        elif FileNo == 5:
+          Board[RankNo][FileNo] = Board[RankNo][FileNo] + "S"
+      else:
+        Board[RankNo][FileNo] = "  "    
                     
 def GetMove(StartSquare, FinishSquare):
   valid_move = False
@@ -309,7 +324,7 @@ def MakeSelection(Choice):
   elif Choice == 4:
     pass
   elif Choice == 5:
-    pass
+    DisplaySettings()
   elif Choice == 6:
     pass
 
@@ -332,13 +347,16 @@ def MakeOptionSelection(OptionChoice):
   if OptionChoice == 1:
     pass
   elif OptionChoice == 2:
-    pass
+    Quit = False
+    return Quit
   elif OptionChoice == 3:
     pass
   elif OptionChoice == 4:
     surrendered = True
     return surrendered
-                     
+
+def DisplaySettings():
+  print("1. Use Kashshaptu Piece")
 def PlayGame(SampleGame):
   Board = CreateBoard() #0th index not used
   StartSquare = 0 
